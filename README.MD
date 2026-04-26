@@ -11,7 +11,7 @@ This is a forked release repository of
 - UI Mod: Anto426
 - Original Magisk: topjohnwu
 
-## Notice
+## ⚠️⚠️⚠️ Notice
 - All released APKs are signed with my personal signature. They do not match the official signature of topjohnwu’s original Magisk. Please uninstall the official Magisk before installation.
 - If Anto426 releases official built APKs in the future, their signatures will also be incompatible with this build. I will stop providing prebuilt releases at that time. Please uninstall this version and switch to Anto426’s official release.
 
