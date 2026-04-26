@@ -12,10 +12,8 @@ This is a forked release repository of
 - Original Magisk: topjohnwu
 
 ## Notice
-For personal use only.
-All rights belong to their respective authors.
-Notice: All released APKs are signed with my personal signature. They do not match the official signature of topjohnwu’s original Magisk. Please uninstall the official Magisk before installation.
-If Anto426 releases official built APKs in the future, their signatures will also be incompatible with this build. I will stop providing prebuilt releases at that time. Please uninstall this version and switch to Anto426’s official release.
+- All released APKs are signed with my personal signature. They do not match the official signature of topjohnwu’s original Magisk. Please uninstall the official Magisk before installation.
+- If Anto426 releases official built APKs in the future, their signatures will also be incompatible with this build. I will stop providing prebuilt releases at that time. Please uninstall this version and switch to Anto426’s official release.
 
 ## <img src="./asset/icon.gif" width="44px" /> About
 
