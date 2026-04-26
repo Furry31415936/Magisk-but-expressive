@@ -1,5 +1,5 @@
 # Magisk-but-expressive
-This is a forked & pre-built release repository of
+This is a forked release repository of
 [Anto426/Magisk-but-expressive](https://github.com/Anto426/Magisk-but-expressive).
 
 ## About
