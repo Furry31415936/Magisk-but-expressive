@@ -2,7 +2,7 @@
 This is a forked release repository of
 [Anto426/Magisk-but-expressive](https://github.com/Anto426/Magisk-but-expressive).
 
-## About This Rrpository
+## About This Repository
 - Only provides **compiled official release APK**
 - No source code modification
 - Just for easier direct installation
