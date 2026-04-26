@@ -1,3 +1,20 @@
+# Magisk-but-expressive
+This is a forked & pre-built release repository of
+[Anto426/Magisk-but-expressive](https://github.com/Anto426/Magisk-but-expressive).
+
+## About
+- Only provides **compiled official release APK**
+- No source code modification
+- Just for easier direct installation
+
+## Credits
+- UI Mod: Anto426
+- Original Magisk: topjohnwu
+
+## Notice
+For personal use only.
+All rights belong to their respective authors.
+
 ## <img src="./asset/icon.gif" width="44px" /> About
 
 This repository is a fork of the official Magisk project.
