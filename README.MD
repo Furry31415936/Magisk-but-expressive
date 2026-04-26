@@ -1,8 +1,8 @@
-# Magisk-but-expressive
+# Magisk-but-expressive release repository
 This is a forked release repository of
 [Anto426/Magisk-but-expressive](https://github.com/Anto426/Magisk-but-expressive).
 
-## About
+## About This Rrpository
 - Only provides **compiled official release APK**
 - No source code modification
 - Just for easier direct installation
@@ -15,9 +15,9 @@ This is a forked release repository of
 - All released APKs are signed with my personal signature. They do not match the official signature of topjohnwu’s original Magisk. Please uninstall the official Magisk before installation.
 - If Anto426 releases official built APKs in the future, their signatures will also be incompatible with this build. I will stop providing prebuilt releases at that time. Please uninstall this version and switch to Anto426’s official release.
 
-## <img src="./asset/icon.gif" width="44px" /> About
+## <img src="./asset/icon.gif" width="44px" /> About Anto426's Repository
 
-This repository is a fork of the official Magisk project.
+The repository is a fork of the official Magisk project.
 
 Upstream: https://github.com/topjohnwu/Magisk
 
