@@ -273,6 +273,39 @@ def dump_flags_native():
 def build_native():
     ensure_toolchain()
 
+    # 1. 必须先生成 flags.prop，否则 Gradle 初始化会抛出 NullPointerException
+    header("* Generating build flags")
+    dump_flags_native()
+    dump_flags_app()
+
+    # 2. 强制生成 Release 签名的 Stub
+    header("* Preparing release-signed stub for native embedding")
+    ensure_jdk()
+    os.chdir("app")
+    execv([paths().gradlew, ":stub:assembleRelease", f"-PconfigPath={args.config.resolve()}"])
+    os.chdir("..")
+
+    # 寻找生成的 release stub
+    stub_src = Path("app", "stub", "build", "outputs", "apk", "release", "stub-release.apk")
+    if not stub_src.exists():
+        # 尝试备用路径
+        stub_src = Path("out", "stub-release.apk")
+
+    if stub_src.exists():
+        # 同步到 core assets，供 App 修补使用
+        asset_dir = Path("app", "core", "src", "main", "assets")
+        asset_dir.mkdir(parents=True, exist_ok=True)
+        cp(stub_src, asset_dir / "stub.apk")
+
+        # 同步到 native 资源目录（某些版本会从这里读取）
+        native_res_dir = Path("native", "out")
+        native_res_dir.mkdir(parents=True, exist_ok=True)
+        cp(stub_src, native_res_dir / "stub.apk")
+
+        vprint(f"Verified release stub: {stub_src}")
+    else:
+        error("Failed to find release-signed stub.apk! Please check your keystore.")
+
     if "targets" not in vars(args) or not args.targets:
         targets = default_targets
     else:
@@ -296,6 +329,8 @@ def dump_flags_app():
     flag_txt = f"abiList={','.join(build_abis.keys())}\n"
     flag_txt += f"version={config['version']}\n"
     flag_txt += f"versionCode={config['versionCode']}\n"
+    flag_txt += f"magisk.versionCode={config['versionCode']}\n"
+    flag_txt += f"magisk.stubVersion={config.get('stubVersion', config['versionCode'])}\n"
 
     app_build_dir = Path("app", "build")
     app_build_dir.mkdir(parents=True, exist_ok=True)
@@ -333,9 +368,19 @@ def build_apk(module: str):
 
 def build_app():
     header("* Building the Magisk app")
-    apk = build_apk(":apk")
 
+    # 1. 先编译 Stub APK
+    header("* Pre-building stub for assets")
+    stub_apk = build_apk(":stub")
+
+    # 2. 将编译好的 Stub 复制到 core 模块的 assets 中，确保签名一致
     build_type = "release" if args.release else "debug"
+    asset_dir = Path("app", "core", "src", "main", "assets")
+    asset_dir.mkdir(parents=True, exist_ok=True)
+    cp(stub_apk, asset_dir / "stub.apk")
+
+    # 3. 再编译主 APK
+    apk = build_apk(":apk")
 
     # Rename apk-variant.apk to app-variant.apk
     source = apk
@@ -343,11 +388,9 @@ def build_app():
     mv(source, target)
     header(f"Output: {target}")
 
-    # Stub building is directly integrated into the main app
-    # build process. Copy the stub APK into output directory.
-    source = Path("app", "core", "src", build_type, "assets", "stub.apk")
-    target = config["outdir"] / f"stub-{build_type}.apk"
-    cp(source, target)
+    # Copy the stub APK into output directory as well
+    target_stub = config["outdir"] / f"stub-{build_type}.apk"
+    cp(stub_apk, target_stub)
 
 
 def build_app_ng():
@@ -410,6 +453,7 @@ def cleanup():
 
     if "app" in targets:
         ensure_jdk()
+        dump_flags_app()
         header("* Cleaning app")
         os.chdir("app")
         execv([paths().gradlew, ":clean"])
@@ -419,7 +463,7 @@ def cleanup():
 def build_all():
     build_native()
     build_app()
-    build_app_ng()
+    # build_app_ng()
     build_test()
 
 
