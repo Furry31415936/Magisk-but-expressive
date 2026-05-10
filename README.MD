@@ -6,6 +6,7 @@ This is a forked release repository of
 - Only provides **compiled official release APK**
 - No source code modification
 - Just for easier direct installation
+- To ensure the build completes successfully, I modified several build-related configuration files
 
 ## Credits
 - UI Mod: Anto426
